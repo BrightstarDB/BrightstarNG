@@ -116,8 +116,6 @@ namespace BrightstarDB.Storage.BTree
 
         public ulong PageId { get { return _page.PageNumber; } }
 
-        public bool IsDirty { get { return _page.IsDirty; } }
-
         public bool IsLeaf { get { return false; } }
 
         public bool IsFull { get { return _keyCount == _config.InternalBranchFactor; } }

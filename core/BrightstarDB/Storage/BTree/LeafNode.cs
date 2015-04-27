@@ -323,7 +323,6 @@ _config.BTreeDebug("LeafNode.Split@{0}. Keys after: {1}", PageId, DumpKeys());
             get { return _page.PageNumber; }
         }
 
-        public bool IsDirty { get { return _page.IsDirty; } }
         public bool IsLeaf { get { return true; } }
         public bool IsFull { get { return KeyCount == _config.LeafLoadFactor; } }
 
