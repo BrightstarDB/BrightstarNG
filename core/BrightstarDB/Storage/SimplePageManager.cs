@@ -5,12 +5,10 @@ namespace BrightstarDB.Storage
     public class SimplePageManager : IPageManager
     {
         private readonly IBlockSource _blockSource;
-        private readonly AbstractFreeListManager _freeListManager;
 
         public SimplePageManager(IBlockSource blockSource)
         {
             _blockSource = blockSource;
-            _freeListManager = new DefaultFreeListManager(this);
         }
 
         public uint PageSize
@@ -23,19 +21,6 @@ namespace BrightstarDB.Storage
             return new PageStruct {PageNumber = pageOffset, Data = _blockSource.GetBlock(pageOffset)};
         }
 
-        public PageStruct CopyPage(ulong pageOffset)
-        {
-            var srcBlock = _blockSource.GetBlock(pageOffset);
-            var newPage = NewPage();
-            Array.Copy(srcBlock, newPage.Data, PageSize);
-            return newPage;
-        }
-
-        public PageStruct NextPage()
-        {
-            ulong? nextFreeOffset = _freeListManager.PopFree();
-            return nextFreeOffset.HasValue ? GetPage(nextFreeOffset.Value) : NewPage();
-        }
 
         public PageStruct NewPage()
         {
@@ -57,10 +42,7 @@ namespace BrightstarDB.Storage
 
         public void Commit()
         {
-            // Ensure the free list is updated
-            _freeListManager.Commit();
             // Ensure the underlying block source is flushed
-            // TODO: This may be ensured by the commit on the free list?
             _blockSource.Flush();
         }
 

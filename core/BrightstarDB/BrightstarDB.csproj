@@ -39,9 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PageStoreSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\DefaultFreeListManager.cs" />
-    <Compile Include="Storage\IPageManagerSession.cs" />
     <Compile Include="Storage\SimplePageManager.cs" />
     <Compile Include="Storage\IBlockSource.cs" />
     <Compile Include="Storage\AbstractFreeListManager.cs" />

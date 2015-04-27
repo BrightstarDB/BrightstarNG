@@ -20,20 +20,6 @@
         PageStruct GetPage(ulong pageOffset);
 
         /// <summary>
-        /// Create a new page that is a copy of the page at the specified offset
-        /// </summary>
-        /// <param name="pageOffset"></param>
-        /// <returns>A <see cref="PageStruct"/> instance wrapping the new page data and page number.</returns>
-        /// <exception cref="BlockOutOfRangeException">Raised if <paramref name="pageOffset"/> specifies a page location past the end of the page store.</exception>
-        PageStruct CopyPage(ulong pageOffset);
-
-        /// <summary>
-        /// Retrieve the next available writeable page, using pages from the free page list where possible
-        /// </summary>
-        /// <returns></returns>
-        PageStruct NextPage();
-
-        /// <summary>
         /// Append a new page to the underlying store. Even if there are free pages available, this method
         /// always creates a new page at the end of the store.
         /// </summary>
