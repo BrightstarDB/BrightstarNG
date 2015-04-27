@@ -41,6 +41,16 @@
   <ItemGroup>
     <Compile Include="PageStoreSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Storage\BTree\BPlusTree.cs" />
+    <Compile Include="Storage\BTree\BPlusTreeConfiguration.cs" />
+    <Compile Include="Storage\BTree\ByteArrayHelper.cs" />
+    <Compile Include="Storage\BTree\IInternalNode.cs" />
+    <Compile Include="Storage\BTree\ILeafNode.cs" />
+    <Compile Include="Storage\BTree\INode.cs" />
+    <Compile Include="Storage\BTree\INodeCache.cs" />
+    <Compile Include="Storage\BTree\InternalNode.cs" />
+    <Compile Include="Storage\BTree\LeafNode.cs" />
+    <Compile Include="Storage\BTree\WeakReferenceNodeCache.cs" />
     <Compile Include="Storage\DefaultFreeListManager.cs" />
     <Compile Include="Storage\SimplePageManager.cs" />
     <Compile Include="Storage\IBlockSource.cs" />
@@ -49,6 +59,7 @@
     <Compile Include="Storage\IPageManager.cs" />
     <Compile Include="Storage\MemoryBlockSource.cs" />
     <Compile Include="Storage\StorageException.cs" />
+    <Compile Include="Utils\ArrayExtensions.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

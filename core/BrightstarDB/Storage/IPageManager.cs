@@ -32,6 +32,8 @@
         /// <param name="page">The modified page</param>
         void MarkDirty(PageStruct page);
 
+        void MarkDirty(ulong pageNumber);
+
         /// <summary>
         /// Flush any modified pages to the underlying store
         /// </summary>

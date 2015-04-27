@@ -35,6 +35,11 @@ namespace BrightstarDB.Storage
             _blockSource.MarkDirty(page.PageNumber);
         }
 
+        public void MarkDirty(ulong pageNumber)
+        {
+            _blockSource.MarkDirty(pageNumber);
+        }
+
         public void Flush()
         {
             _blockSource.Flush();
