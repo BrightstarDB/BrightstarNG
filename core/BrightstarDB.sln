@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrightstarDB", "BrightstarDB\BrightstarDB.csproj", "{AFADDD3F-4CEE-4530-B89E-47EAD9E2DF90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrightstarDB.Tests", "Tests\BrightstarDB.Tests\BrightstarDB.Tests.csproj", "{0F5F420D-7C26-48E0-BF6A-1B1FC6175E01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFADDD3F-4CEE-4530-B89E-47EAD9E2DF90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFADDD3F-4CEE-4530-B89E-47EAD9E2DF90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFADDD3F-4CEE-4530-B89E-47EAD9E2DF90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFADDD3F-4CEE-4530-B89E-47EAD9E2DF90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F5F420D-7C26-48E0-BF6A-1B1FC6175E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F5F420D-7C26-48E0-BF6A-1B1FC6175E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F5F420D-7C26-48E0-BF6A-1B1FC6175E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F5F420D-7C26-48E0-BF6A-1B1FC6175E01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
