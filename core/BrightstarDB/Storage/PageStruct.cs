@@ -12,6 +12,7 @@ namespace BrightstarDB.Storage
 
         public void SetData(byte[] data, int srcOffset, int destOffset, int len)
         {
+            if (!IsWriteable) throw new InvalidOperationException("Attempted to write to a readonly page");
             if (len == 0) return;
             Array.ConstrainedCopy(data, srcOffset, Data, destOffset, len > 0 ? len : data.Length);
             IsDirty = true;

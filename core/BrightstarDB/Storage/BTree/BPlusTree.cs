@@ -68,7 +68,7 @@ namespace BrightstarDB.Storage.BTree
                 return ret;
             }
 
-            var nodePage = _pageStore.GetPage(nodeId);
+            var nodePage = _pageStore.GetPage(nodeId, false);
             var header = BitConverter.ToInt32(nodePage.Data, 0);
             if (header < 0)
             {
@@ -568,7 +568,7 @@ namespace BrightstarDB.Storage.BTree
         private void MarkDirty(INode node)
         {
             _isDirty = true;
-            _pageStore.MarkDirty(node.PageId);
+            //_pageStore.MarkDirty(node.PageId);
         }
 
         public virtual ulong Save(ulong transactionId)

@@ -18,8 +18,9 @@ namespace BrightstarDB.Storage
         /// Retrieve the data in the block at the specified zero-based offset from the start of the source
         /// </summary>
         /// <param name="blockOffset"></param>
+        /// <param name="forWriting">Pass true if the block is to be written to, false if it is to be readonly</param>
         /// <returns></returns>
-        byte[] GetBlock(ulong blockOffset);
+        byte[] GetBlock(ulong blockOffset, bool forWriting);
 
         /// <summary>
         /// Mark the block at the specified offset as dirty

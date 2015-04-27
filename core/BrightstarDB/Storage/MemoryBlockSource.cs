@@ -24,7 +24,7 @@ namespace BrightstarDB.Storage
 
         public uint BlockSize { get; private set; }
 
-        public byte[] GetBlock(ulong blockOffset)
+        public byte[] GetBlock(ulong blockOffset, bool forWriting)
         {
             try
             {

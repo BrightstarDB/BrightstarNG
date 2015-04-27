@@ -19,18 +19,21 @@ namespace BrightstarDB.Storage
 
         public override void Load(ulong rootPageOffset)
         {
-            var currentPage = PageManager.GetPage(rootPageOffset);
-            while (true)
+            lock (_commitFreeLists)
             {
-                _reservedPages.Add(currentPage.PageNumber);
-                var nextPageOffset = BitConverter.ToUInt32(currentPage.Data, 0);
-                var numEntries = (int) BitConverter.ToUInt32(currentPage.Data, 4);
-                for (var i = 0; i < numEntries; i++)
+                var currentPage = PageManager.GetPage(rootPageOffset, false);
+                while (true)
                 {
-                    _availablePages.AddLast(BitConverter.ToUInt32(currentPage.Data, (i + 2)*4));
+                    _reservedPages.Add(currentPage.PageNumber);
+                    var nextPageOffset = BitConverter.ToUInt32(currentPage.Data, 0);
+                    var numEntries = (int) BitConverter.ToUInt32(currentPage.Data, 4);
+                    for (var i = 0; i < numEntries; i++)
+                    {
+                        _availablePages.AddLast(BitConverter.ToUInt32(currentPage.Data, (i + 2)*4));
+                    }
+                    if (nextPageOffset == 0) break;
+                    currentPage = PageManager.GetPage(nextPageOffset, false);
                 }
-                if (nextPageOffset == 0) break;
-                currentPage = PageManager.GetPage(nextPageOffset);
             }
         }
 
@@ -144,7 +147,6 @@ namespace BrightstarDB.Storage
                             var flPage = GetNextFreelistPage();
                             freeListPages.Add(flPage.PageNumber);
                             buff.CopyTo(flPage.Data, 0);
-                            PageManager.MarkDirty(flPage);
                             if (prevPage != null)
                             {
                                BitConverter.GetBytes(flPage.PageNumber).CopyTo(prevPage.Value.Data, 0);
@@ -159,7 +161,6 @@ namespace BrightstarDB.Storage
                         var flPage = GetNextFreelistPage();
                         freeListPages.Add(flPage.PageNumber);
                         buff.CopyTo(flPage.Data, 0);
-                        PageManager.MarkDirty(flPage);
                         if (prevPage != null)
                         {
                             BitConverter.GetBytes(flPage.PageNumber).CopyTo(prevPage.Value.Data, 0);
@@ -175,7 +176,7 @@ namespace BrightstarDB.Storage
         {
             if (_reservedPages.Count > 0)
             {
-                var ret = PageManager.GetPage(_reservedPages[0]);
+                var ret = PageManager.GetPage(_reservedPages[0], true);
                 _reservedPages.RemoveAt(0);
                 return ret;
             }
@@ -208,7 +209,7 @@ namespace BrightstarDB.Storage
 
         public CommitFreeList(ulong commitId)
         {
-            CommitId = CommitId;
+            CommitId = commitId;
             FreedPages = new HashSet<ulong>();
             IsLocked = true;
         }

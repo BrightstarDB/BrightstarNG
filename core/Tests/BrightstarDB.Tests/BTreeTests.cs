@@ -73,6 +73,7 @@ namespace BrightstarDB.Tests
             }
             freeListManager.UnlockCommit(3ul);
 
+            // Page 0 was released when commit 2 got unlocked so it should be used as the new tree root page
             Assert.That(treeRoot, Is.EqualTo(0));
             Assert.That(freePageRoot, Is.EqualTo(2));
         }

@@ -15,9 +15,10 @@
         /// Get the page at the specified offset
         /// </summary>
         /// <param name="pageOffset"></param>
+        /// <param name="forWriting">True if the page returned should be read/write, false if it should be readonly</param>
         /// <returns>A <see cref="PageStruct"/> instance wrapping the page data and page number.</returns>
         /// <exception cref="BlockOutOfRangeException">Raised if <paramref name="pageOffset"/> specifies a page location past the end of the page store.</exception>
-        PageStruct GetPage(ulong pageOffset);
+        PageStruct GetPage(ulong pageOffset, bool forWriting);
 
         /// <summary>
         /// Append a new page to the underlying store. Even if there are free pages available, this method
@@ -25,14 +26,6 @@
         /// </summary>
         /// <returns>A <see cref="PageStruct"/> instance wrapping the newly created page data and page number.</returns>
         PageStruct NewPage();
-
-        /// <summary>
-        /// Mark a page with a modified data buffer
-        /// </summary>
-        /// <param name="page">The modified page</param>
-        void MarkDirty(PageStruct page);
-
-        void MarkDirty(ulong pageNumber);
 
         /// <summary>
         /// Flush any modified pages to the underlying store

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BrightstarDB.Storage
+﻿namespace BrightstarDB.Storage
 {
     public class SimplePageManager : IPageManager
     {
@@ -16,16 +14,16 @@ namespace BrightstarDB.Storage
             get { return _blockSource.BlockSize; }
         }
 
-        public PageStruct GetPage(ulong pageOffset)
+        public PageStruct GetPage(ulong pageOffset, bool forWriting)
         {
-            return new PageStruct {PageNumber = pageOffset, Data = _blockSource.GetBlock(pageOffset)};
+            return new PageStruct {PageNumber = pageOffset, Data = _blockSource.GetBlock(pageOffset, forWriting), IsWriteable = forWriting};
         }
 
 
         public PageStruct NewPage()
         {
             var newPageOffset = _blockSource.Grow();
-            var newBlockData = _blockSource.GetBlock(newPageOffset);
+            var newBlockData = _blockSource.GetBlock(newPageOffset, true);
             var newPage  = new PageStruct {PageNumber = newPageOffset, Data = newBlockData, IsWriteable = true};
             return newPage;
         }

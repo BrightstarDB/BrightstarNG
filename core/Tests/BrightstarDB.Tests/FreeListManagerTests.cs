@@ -28,7 +28,7 @@ namespace BrightstarDB.Tests
         public void TestLoadShortFreeList()
         {
             // Create a freelist root page with 10 free pages recorded on it
-            var page = _pageManager.GetPage(1);
+            var page = _pageManager.GetPage(1, true);
             BitConverter.GetBytes(0ul).CopyTo(page.Data, 0);
             BitConverter.GetBytes(10ul).CopyTo(page.Data, 4);
             for (int i = 0; i < 10; i++)
@@ -50,8 +50,8 @@ namespace BrightstarDB.Tests
         public void TestLoadLongFreeList()
         {
             // Create a linked pair of free list pages
-            var startPage = _pageManager.GetPage(1);
-            var linkedPage = _pageManager.GetPage(2);
+            var startPage = _pageManager.GetPage(1, true);
+            var linkedPage = _pageManager.GetPage(2, true);
             BitConverter.GetBytes(2ul).CopyTo(startPage.Data, 0);
             BitConverter.GetBytes(10ul).CopyTo(startPage.Data, 4);
             BitConverter.GetBytes(0ul).CopyTo(linkedPage.Data, 0);
@@ -103,7 +103,7 @@ namespace BrightstarDB.Tests
         {
             _flManager.AddFreePage(10, 1);
             var rootPageOffset = _flManager.Commit();
-            var rootPage = _pageManager.GetPage(rootPageOffset);
+            var rootPage = _pageManager.GetPage(rootPageOffset, true);
 
             var fwdLink = BitConverter.ToUInt32(rootPage.Data, 0);
             var freeCount = BitConverter.ToUInt32(rootPage.Data, 4);

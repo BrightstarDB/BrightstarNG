@@ -18,9 +18,10 @@ namespace BrightstarDB.Storage
             ReadCommitId = commitId;
         }
 
-        public PageStruct GetPage(ulong pageId)
+        public virtual PageStruct GetPage(ulong pageId, bool forWriting)
         {
-            return PageManager.GetPage(pageId);
+            if (forWriting) throw new ArgumentException("Cannot use a read-only session to open a page for writing");
+            return PageManager.GetPage(pageId, false);
         }
 
         public void Close()

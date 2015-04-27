@@ -11,9 +11,14 @@ namespace BrightstarDB.Storage
             WriteCommitId = writeCommitId;
         }
 
+        public override PageStruct GetPage(ulong pageId, bool forWriting)
+        {
+            return PageManager.GetPage(pageId, forWriting);
+        }
+
         public PageStruct CopyPage(ulong pageId)
         {
-            var srcPage = GetPage(pageId);
+            var srcPage = GetPage(pageId, false);
             var destPage = NextPage();
             srcPage.Data.CopyTo(destPage.Data, 0);
             FreeListManager.AddFreePage(pageId, WriteCommitId);
@@ -32,14 +37,9 @@ namespace BrightstarDB.Storage
             {
                 return PageManager.NewPage();
             }
-            var ret= GetPage(freePage.Value);
+            var ret= GetPage(freePage.Value, true);
             ret.IsWriteable = true;
             return ret;
-        }
-
-        public void MarkDirty(PageStruct page)
-        {
-            PageManager.MarkDirty(page);
         }
 
         public ulong Commit()

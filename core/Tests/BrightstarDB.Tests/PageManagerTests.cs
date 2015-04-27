@@ -34,9 +34,8 @@ namespace BrightstarDB.Tests
         {
             var newPage = _pageManager.NewPage();
             Array.Copy(_magicString, newPage.Data, _magicString.Length);
-            _pageManager.MarkDirty(newPage);
 
-            var getPage = _pageManager.GetPage(newPage.PageNumber);
+            var getPage = _pageManager.GetPage(newPage.PageNumber, false);
             Assert.AreEqual(_magicString, getPage.Data.Take(5).ToArray());
         }
 
@@ -44,7 +43,7 @@ namespace BrightstarDB.Tests
         [ExpectedException(typeof(BlockOutOfRangeException))]
         public void TestGetPageCannotExceedBounds()
         {
-            var p = _pageManager.GetPage(_blockSource.Length);
+            var p = _pageManager.GetPage(_blockSource.Length, false);
         }
 
     }

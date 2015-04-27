@@ -59,6 +59,7 @@
     <Compile Include="Storage\IPageManager.cs" />
     <Compile Include="Storage\MemoryBlockSource.cs" />
     <Compile Include="Storage\StorageException.cs" />
+    <Compile Include="Storage\SyncFileBlockSource.cs" />
     <Compile Include="Storage\WriteablePageStoreSession.cs" />
     <Compile Include="Utils\ArrayExtensions.cs" />
   </ItemGroup>
