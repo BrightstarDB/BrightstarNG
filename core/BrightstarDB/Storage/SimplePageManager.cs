@@ -26,7 +26,7 @@ namespace BrightstarDB.Storage
         {
             var newPageOffset = _blockSource.Grow();
             var newBlockData = _blockSource.GetBlock(newPageOffset);
-            var newPage  = new PageStruct {PageNumber = newPageOffset, Data = newBlockData};
+            var newPage  = new PageStruct {PageNumber = newPageOffset, Data = newBlockData, IsWriteable = true};
             return newPage;
         }
 

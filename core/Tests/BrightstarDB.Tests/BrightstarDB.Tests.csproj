@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BTreeTests.cs" />
     <Compile Include="FreeListManagerTests.cs" />
     <Compile Include="MemoryBlockSourceTests.cs" />
     <Compile Include="PageManagerTests.cs" />

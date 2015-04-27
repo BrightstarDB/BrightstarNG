@@ -5,7 +5,7 @@ using BrightstarDB.Utils;
 
 namespace BrightstarDB.Storage.BTree
 {
-    internal class BPlusTree
+    public class BPlusTree
     {
         private ulong _rootId;
         private readonly BPlusTreeConfiguration _config;
@@ -22,11 +22,11 @@ namespace BrightstarDB.Storage.BTree
         /// <param name="pageStore"></param>
         /// <param name="keySize">The size of the B+ tree's key (in bytes)</param>
         /// <param name="dataSize">The size of the values stored in leaf nodes (in bytes)</param>
-        public BPlusTree(ulong txnId, IPageManager pageStore, int keySize = 8, int dataSize = 64) 
+        public BPlusTree(WriteablePageStoreSession session, IPageManager pageStore, int keySize = 8, int dataSize = 64) 
         {
             _config = new BPlusTreeConfiguration(pageStore, keySize, dataSize, (int)pageStore.PageSize);
             _pageStore = pageStore;
-            var root = MakeLeafNode(txnId);
+            var root = MakeLeafNode(session);
             _rootId = root.PageId;
             _nodeCache = new WeakReferenceNodeCache();
             _nodeCache.Add(root);
@@ -635,9 +635,9 @@ namespace BrightstarDB.Storage.BTree
 
         #region Node factory methods
 
-        private ILeafNode MakeLeafNode(ulong txnId)
+        private ILeafNode MakeLeafNode(WriteablePageStoreSession session)
         {
-            return new LeafNode((_pageStore as WriteablePageStoreSession).NextPage(), 0, 0, _config);
+            return new LeafNode(session.NextPage(), 0, 0, _config);
         }
 
         private ILeafNode MakeLeafNode(PageStruct nodePage, int keyCount)

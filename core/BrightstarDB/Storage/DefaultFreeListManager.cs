@@ -119,7 +119,7 @@ namespace BrightstarDB.Storage
             var maxEntryCount = (PageManager.PageSize/4) - 2;
             var ix = 0;
             var buff = new byte[PageManager.PageSize];
-            ulong rootPageRef = 0ul;
+            var freeListPages = new List<ulong>();
             lock (_availablePages)
             {
                 lock (_commitFreeLists)
@@ -142,9 +142,9 @@ namespace BrightstarDB.Storage
                         {
                             BitConverter.GetBytes(ix).CopyTo(buff, 4);
                             var flPage = GetNextFreelistPage();
+                            freeListPages.Add(flPage.PageNumber);
                             buff.CopyTo(flPage.Data, 0);
                             PageManager.MarkDirty(flPage);
-                            if (rootPageRef == 0ul) rootPageRef = flPage.PageNumber;
                             if (prevPage != null)
                             {
                                BitConverter.GetBytes(flPage.PageNumber).CopyTo(prevPage.Value.Data, 0);
@@ -157,9 +157,9 @@ namespace BrightstarDB.Storage
                     {
                         BitConverter.GetBytes(ix).CopyTo(buff, 4);
                         var flPage = GetNextFreelistPage();
-                        PageManager.MarkDirty(flPage);
+                        freeListPages.Add(flPage.PageNumber);
                         buff.CopyTo(flPage.Data, 0);
-                        if (rootPageRef == 0ul) rootPageRef = flPage.PageNumber;
+                        PageManager.MarkDirty(flPage);
                         if (prevPage != null)
                         {
                             BitConverter.GetBytes(flPage.PageNumber).CopyTo(prevPage.Value.Data, 0);
@@ -167,7 +167,8 @@ namespace BrightstarDB.Storage
                     }
                 }
             }
-            return rootPageRef;
+            _reservedPages.AddRange(freeListPages);
+            return freeListPages.Count > 0 ? freeListPages[0] : 0;
         }
 
         private PageStruct GetNextFreelistPage()

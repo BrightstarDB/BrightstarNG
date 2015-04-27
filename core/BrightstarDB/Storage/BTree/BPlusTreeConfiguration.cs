@@ -3,7 +3,7 @@ using BrightstarDB.Utils;
 
 namespace BrightstarDB.Storage.BTree
 {
-    internal class BPlusTreeConfiguration : IComparer<byte[]>
+    public class BPlusTreeConfiguration : IComparer<byte[]>
     {
         /// <summary>
         /// The size of key in bytes

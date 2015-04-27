@@ -1,6 +1,6 @@
 ﻿namespace BrightstarDB.Storage.BTree
 {
-    internal interface INode
+    public interface INode
     {
         /// <summary>
         /// Get or set the ID of the page where this node is persisted
